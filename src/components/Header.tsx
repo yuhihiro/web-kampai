@@ -21,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ onNewOrder }) => {
           <div className="flex items-center space-x-6">
             <div className="bg-white/20 backdrop-blur-sm p-2 rounded-2xl shadow-lg">
               {(() => {
-                const file = 'WhatsApp Image 2025-11-23 at 20.17.17.jpeg';
+                const file = 'logo.jpeg';
                 const logoSrc = `${import.meta.env.BASE_URL}${encodeURIComponent(file)}`;
                 return (
                   <img

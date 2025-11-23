@@ -25,7 +25,7 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
               <div className="relative bg-white rounded-full p-2 shadow-2xl border-4 border-white">
                 {(() => {
-                  const file = 'WhatsApp Image 2025-11-23 at 20.17.17.jpeg';
+                  const file = 'logo.jpeg';
                   const logoSrc = `${import.meta.env.BASE_URL}${encodeURIComponent(file)}`;
                   return (
                     <img
