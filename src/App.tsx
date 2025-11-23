@@ -24,11 +24,17 @@ function App() {
             <div className="relative inline-block mb-8">
               <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
               <div className="relative bg-white rounded-full p-2 shadow-2xl border-4 border-white">
-                <img
-                  src={`${import.meta.env.BASE_URL}WhatsApp Image 2025-11-23 at 20.17.17.jpeg`}
-                  alt="Logo"
-                  className="w-40 h-40 rounded-full object-cover animate-float"
-                />
+                {(() => {
+                  const file = 'WhatsApp Image 2025-11-23 at 20.17.17.jpeg';
+                  const logoSrc = `${import.meta.env.BASE_URL}${encodeURIComponent(file)}`;
+                  return (
+                    <img
+                      src={logoSrc}
+                      alt="Logo"
+                      className="w-40 h-40 rounded-full object-cover animate-float"
+                    />
+                  );
+                })()}
               </div>
             </div>
             

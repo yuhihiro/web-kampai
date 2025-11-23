@@ -20,11 +20,17 @@ export const Header: React.FC<HeaderProps> = ({ onNewOrder }) => {
           {/* Logo e Título */}
           <div className="flex items-center space-x-6">
             <div className="bg-white/20 backdrop-blur-sm p-2 rounded-2xl shadow-lg">
-              <img
-                src={`${import.meta.env.BASE_URL}WhatsApp Image 2025-11-23 at 20.17.17.jpeg`}
-                alt="Logo"
-                className="w-16 h-16 rounded-xl object-cover animate-float"
-              />
+              {(() => {
+                const file = 'WhatsApp Image 2025-11-23 at 20.17.17.jpeg';
+                const logoSrc = `${import.meta.env.BASE_URL}${encodeURIComponent(file)}`;
+                return (
+                  <img
+                    src={logoSrc}
+                    alt="Logo"
+                    className="w-16 h-16 rounded-xl object-cover animate-float"
+                  />
+                );
+              })()}
             </div>
             <div className="space-y-1">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-red-100 bg-clip-text text-transparent tracking-tight">
