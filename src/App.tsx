@@ -25,7 +25,7 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
               <div className="relative bg-white rounded-full p-2 shadow-2xl border-4 border-white">
                 <img
-                  src="/WhatsApp%20Image%202025-11-23%20at%2020.17.17.jpeg"
+                  src={`${import.meta.env.BASE_URL}WhatsApp Image 2025-11-23 at 20.17.17.jpeg`}
                   alt="Logo"
                   className="w-40 h-40 rounded-full object-cover animate-float"
                 />
