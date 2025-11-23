@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirecionando…</title>
+    <meta http-equiv="refresh" content="0; url=/web-kampai/" />
+    <style>
+      html, body { height: 100%; background: #000; color: #fff; display: grid; place-items: center; font-family: Inter, system-ui, sans-serif }
+    </style>
+  </head>
+  <body>
+    <p>Redirecionando para <a href="/web-kampai/">/web-kampai/</a>…</p>
+    <script>
+      (function() {
+        var target = '/web-kampai/';
+        // Preserve path after repo base
+        var path = window.location.pathname.replace(/^\/web-kampai\//, '');
+        if (path) target += path;
+        var search = window.location.search || '';
+        var hash = window.location.hash || '';
+        window.location.replace(target + search + hash);
+      })();
+    </script>
+  </body>
+</html>
