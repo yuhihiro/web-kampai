@@ -33,8 +33,8 @@ export const Header: React.FC<HeaderProps> = ({ onNewOrder }) => {
               })()}
             </div>
             <div className="space-y-1">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-red-100 bg-clip-text text-transparent tracking-tight">
-                Sushi Token
+              <h1 className="text-4xl font-bold text-white tracking-tight">
+                Kampai Box
               </h1>
               <p className="text-red-100 text-lg font-medium tracking-wide">
                 Sistema de Atendimento Digital

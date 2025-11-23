@@ -39,8 +39,8 @@ function App() {
             </div>
             
             {/* Título Principal */}
-            <h1 className="text-7xl font-black bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent mb-6 tracking-tight">
-              Sushi Token
+            <h1 className="text-7xl font-black text-white mb-6 tracking-tight">
+              Kampai Box
             </h1>
             
             
