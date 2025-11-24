@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import { useOrderStore } from '../store/orderStore';
+import { PaymentModal } from './PaymentModal';
+import type { PaymentMethod } from './PaymentModal';
 
 export const OrderSummary: React.FC = () => {
-  const { items, removeItem, generateToken, customerName, setCustomerName } = useOrderStore();
+  const { items, removeItem, generateToken, customerName, setCustomerName, setPaymentMethod, paymentMethod } = useOrderStore();
   const [showToken, setShowToken] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  const total = items.reduce((sum, item) => sum + item.price, 0);
+  const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleFinalizeOrder = () => {
     if (items.length === 0 || !customerName.trim()) return;
     
+    // Show payment modal instead of directly generating token
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentConfirm = (paymentMethod: PaymentMethod) => {
+    setPaymentMethod(paymentMethod);
+    setShowPaymentModal(false);
+    
+    // Generate token after payment method is selected
     generateToken();
     setShowToken(true);
     
@@ -85,6 +97,7 @@ export const OrderSummary: React.FC = () => {
                     <div className="flex-1">
                       <div className="font-bold text-white text-lg mb-1 group-hover:text-red-400 transition-colors">
                         {item.name}
+                        {item.quantity > 1 && <span className="text-red-400 ml-2">x{item.quantity}</span>}
                       </div>
                       <div className="text-sm text-gray-300 font-medium bg-neutral-800 px-3 py-1 rounded-full inline-block">
                         {item.category}
@@ -92,7 +105,7 @@ export const OrderSummary: React.FC = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                       <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg">
-                        R$ {item.price.toFixed(2)}
+                        R$ {(item.price * item.quantity).toFixed(2)}
                       </div>
                       <button
                         onClick={() => removeItem(item.id)}
@@ -108,6 +121,31 @@ export const OrderSummary: React.FC = () => {
             </div>
           )}
         </div>
+
+        {/* Payment Method */}
+        {paymentMethod && (
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6 border-2 border-blue-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="text-2xl mr-3">
+                  {paymentMethod === 'pix' ? '📱' : paymentMethod === 'credit' ? '💳' : '💰'}
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 font-semibold">Forma de Pagamento</p>
+                  <p className="font-bold text-gray-900">
+                    {paymentMethod === 'pix' ? 'PIX' : paymentMethod === 'credit' ? 'Cartão de Crédito' : 'Cartão de Débito'}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowPaymentModal(true)}
+                className="text-blue-600 hover:text-blue-800 font-semibold text-sm underline"
+              >
+                Alterar
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Total e Botão de Finalização */}
         <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 rounded-2xl p-6 border-2 border-neutral-700">
@@ -143,10 +181,20 @@ export const OrderSummary: React.FC = () => {
               <p className="text-green-800 font-bold text-2xl mb-2">
                 Pedido finalizado com sucesso!
               </p>
-              <p className="text-green-700 text-lg font-medium">
+              <p className="text-green-700 text-lg font-medium mb-4">
                 Token de atendimento gerado no cabeçalho
               </p>
-              <div className="mt-4 bg-white/80 backdrop-blur-sm rounded-xl p-4 inline-block">
+              {paymentMethod && (
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 inline-block mb-4">
+                  <p className="text-green-600 text-sm font-semibold mb-1">
+                    💳 Forma de pagamento:
+                  </p>
+                  <p className="text-green-800 font-bold">
+                    {paymentMethod === 'pix' ? 'PIX' : paymentMethod === 'credit' ? 'Cartão de Crédito' : 'Cartão de Débito'}
+                  </p>
+                </div>
+              )}
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 inline-block">
                 <p className="text-green-600 text-sm font-semibold">
                   🎫 Anote o token para o cliente
                 </p>
@@ -155,6 +203,14 @@ export const OrderSummary: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onConfirm={handlePaymentConfirm}
+        total={total}
+      />
     </div>
   );
 };

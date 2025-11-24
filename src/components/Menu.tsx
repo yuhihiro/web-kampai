@@ -10,7 +10,11 @@ const MenuItem: React.FC<{
   onSelect: () => void;
   isSelected: boolean;
   disabled?: boolean;
-}> = ({ name, price = 0, ingredients, onSelect, isSelected, disabled }) => (
+  showQuantity?: boolean;
+  quantity?: number;
+  onIncrease?: () => void;
+  onDecrease?: () => void;
+}> = ({ name, price = 0, ingredients, onSelect, isSelected, disabled, showQuantity = false, quantity = 1, onIncrease, onDecrease }) => (
   <div 
     onClick={onSelect}
     className={`group relative bg-neutral-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 ${
@@ -54,6 +58,29 @@ const MenuItem: React.FC<{
       )}
       
       <div className="pt-3 border-t border-gray-100">
+        {showQuantity && isSelected && (
+          <div className="flex items-center justify-center space-x-3 mb-3">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDecrease?.();
+              }}
+              className="bg-red-600 hover:bg-red-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all duration-200 hover:scale-110"
+            >
+              −
+            </button>
+            <span className="text-white font-bold text-lg min-w-[2rem] text-center">{quantity}</span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onIncrease?.();
+              }}
+              className="bg-green-600 hover:bg-green-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all duration-200 hover:scale-110"
+            >
+              +
+            </button>
+          </div>
+        )}
         <div className={`text-sm font-semibold transition-colors ${
           isSelected ? 'text-red-400' : 'text-gray-400 group-hover:text-red-400'
         }`}>
@@ -93,7 +120,7 @@ const MenuSection: React.FC<{
 
 export const Menu: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'poke' | 'temaki'>('poke');
-  const { items, addItem, removeItem } = useOrderStore();
+  const { items, addItem, removeItem, updateItemQuantity } = useOrderStore();
 
   const SECTION_RULES: Record<string, { key: 'base1' | 'proteina' | 'acompanhamentos' | 'molhos'; max: number }> = {
     'Base (escolha 1):': { key: 'base1', max: 1 },
@@ -171,6 +198,31 @@ export const Menu: React.FC = () => {
     return items.some((item) => item.name === itemName);
   };
 
+  const getItemQuantity = (itemName: string, category?: string) => {
+    const item = items.find((item) => item.name === itemName && item.category === category);
+    return item ? item.quantity : 0;
+  };
+
+  const handleIncreaseQuantity = (name: string, category: string, price: number) => {
+    const existingItem = items.find(item => item.name === name && item.category === category);
+    if (existingItem) {
+      updateItemQuantity(existingItem.id, existingItem.quantity + 1);
+    } else {
+      addItem({ name, category, price });
+    }
+  };
+
+  const handleDecreaseQuantity = (name: string, category: string) => {
+    const existingItem = items.find(item => item.name === name && item.category === category);
+    if (existingItem) {
+      if (existingItem.quantity > 1) {
+        updateItemQuantity(existingItem.id, existingItem.quantity - 1);
+      } else {
+        removeItem(existingItem.id);
+      }
+    }
+  };
+
   return (
     <div className="bg-neutral-900 rounded-3xl shadow-2xl p-8 animate-fadeIn border border-neutral-800 overflow-hidden text-white">
       {/* Sistema de Abas Moderno */}
@@ -224,20 +276,32 @@ export const Menu: React.FC = () => {
                     icon={sectionIndex === 0 ? '🍚' : sectionIndex === 1 ? '🐟' : sectionIndex === 2 ? '🥗' : '🧂'}
                     subtitleRight={subtitle}
                   >
-                    {section.items.map((item, itemIndex) => (
-                      <div key={itemIndex} data-item-name={item}>
-                        <MenuItem
-                          name={item}
-                          onSelect={() => handleSelectItem(item, section.title)}
-                          isSelected={isItemSelected(item, section.title)}
-                          disabled={(() => {
-                            if (!rule || rule.max === 1) return false;
-                            const list = selectedPoke[rule.key] as string[];
-                            return list.length >= rule.max && !list.includes(item);
-                          })()}
-                        />
-                      </div>
-                    ))}
+                    {section.items.map((item, itemIndex) => {
+                      const itemName = typeof item === 'string' ? item : item.name;
+                      const itemPrice = typeof item === 'string' ? 0 : item.price;
+                      const showQuantity = sectionIndex <= 1; // Show quantity for Base and Protein sections
+                      const quantity = getItemQuantity(itemName, section.title);
+                      
+                      return (
+                        <div key={itemIndex} data-item-name={itemName}>
+                          <MenuItem
+                            name={itemName}
+                            price={itemPrice}
+                            onSelect={() => handleSelectItem(itemName, section.title, itemPrice)}
+                            isSelected={isItemSelected(itemName, section.title)}
+                            disabled={(() => {
+                              if (!rule || rule.max === 1) return false;
+                              const list = selectedPoke[rule.key] as string[];
+                              return list.length >= rule.max && !list.includes(itemName);
+                            })()}
+                            showQuantity={showQuantity}
+                            quantity={quantity}
+                            onIncrease={() => handleIncreaseQuantity(itemName, section.title, itemPrice)}
+                            onDecrease={() => handleDecreaseQuantity(itemName, section.title)}
+                          />
+                        </div>
+                      );
+                    })}
                   </MenuSection>
                 );
               })}

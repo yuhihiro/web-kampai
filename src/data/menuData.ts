@@ -4,11 +4,22 @@ export const menuData = {
     sections: [
       {
         title: "Base (escolha 1):",
-        items: ["Arroz Japonês", "Harussame (Macarrão de Feijão Verde)", "Salada de Alface"]
+        items: [
+          { name: "Arroz Japonês", price: 5.00 },
+          { name: "Harussame (Macarrão de Feijão Verde)", price: 6.00 },
+          { name: "Salada de Alface", price: 4.50 }
+        ]
       },
       {
         title: "Proteína (escolha 1):",
-        items: ["Salmão Cru", "Salmão Grelhado", "Tilápia", "Frango Teriaki", "Camarão", "Bacon"]
+        items: [
+          { name: "Salmão Cru", price: 18.00 },
+          { name: "Salmão Grelhado", price: 16.00 },
+          { name: "Tilápia", price: 14.00 },
+          { name: "Frango Teriaki", price: 12.00 },
+          { name: "Camarão", price: 20.00 },
+          { name: "Bacon", price: 10.00 }
+        ]
       },
       {
         title: "Acompanhamentos (escolha 5 sem repetir):",
