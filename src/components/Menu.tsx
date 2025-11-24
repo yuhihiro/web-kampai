@@ -2,6 +2,47 @@ import React, { useState } from 'react';
 import { menuData } from '../data/menuData';
 import { useOrderStore } from '../store/orderStore';
 
+const IMAGE_FILES: Record<string, string> = {
+  'Arroz Japonês': 'arroz.png',
+  'Harussame (Macarrão de Feijão Verde)': 'Harussame.png',
+  'Salada de Alface': 'Salada.png',
+  'Salmão Cru': 'Salmão.png',
+  'Salmão Grelhado': 'Salmão Grelhado.png',
+  'Tilápia': 'Tilápia.png',
+  'Frango Teriaki': 'Frago Teriaki.png',
+  'Camarão': 'Camarão.png',
+  'Bacon': 'Bacon.png',
+  'Cream Cheese': 'Cream Cheese.png',
+  'Cebola Roxa': 'Cebola Roxa.png',
+  'Sunomono': 'Sunomono.png',
+  'Palmito': 'Palmito.png',
+  'Gengibre': 'Gengibre.png',
+  'Chips de Batata Doce': 'Chips de batata doce.png',
+  'Manga': 'Manga.png',
+  'Cenoura': 'Cenoura.png',
+  'Cebolinha': 'Cebolinha.png',
+  'Couve Crispy': 'Couve Crispy.png',
+  'Tomate Cereja': 'Tomate.png',
+  'Kani': 'Kani.png',
+  'Edamame': 'Edamame.png',
+  'Tarê': 'Tare.png',
+  'Pimenta Chilli': 'Pimenta Chilli.png',
+  'Maionese': 'Maionese.png',
+  'Shoyo': 'Shoyo.png',
+  'Temaki Filadélfia': 'Temaki Filadelfia.png',
+  'Temaki Filadélfia sem Arroz': 'Temaki Filadéfia sem Arroz.png',
+  'Temaki Frango Teriaki': 'Temaki Frango Teriyaki.png',
+  'Temaki Hot Holl': 'Temaki Hot holl.png',
+  'Temaki Vegetariano': 'Temaki Vegetariano.png',
+  'Temaki Bacon': 'Temaki Bancon.png'
+};
+
+const getImageSrc = (name: string): string | undefined => {
+  const file = IMAGE_FILES[name];
+  if (!file) return undefined;
+  return `${import.meta.env.BASE_URL}${encodeURIComponent(file)}`;
+};
+
 // Componente de Item do Menu com design moderno
 const MenuItem: React.FC<{
   name: string;
@@ -14,7 +55,8 @@ const MenuItem: React.FC<{
   quantity?: number;
   onIncrease?: () => void;
   onDecrease?: () => void;
-}> = ({ name, price = 0, ingredients, onSelect, isSelected, disabled, showQuantity = false, quantity = 1, onIncrease, onDecrease }) => (
+  imageSrc?: string;
+}> = ({ name, price = 0, ingredients, onSelect, isSelected, disabled, showQuantity = false, quantity = 1, onIncrease, onDecrease, imageSrc }) => (
   <div 
     onClick={onSelect}
     className={`group relative bg-neutral-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 ${
@@ -26,11 +68,15 @@ const MenuItem: React.FC<{
     {/* Imagem de fundo com overlay */}
     <div className="relative h-32 bg-linear-to-br from-neutral-800 to-neutral-900 overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-300">
-          {name.includes('Salmão') ? '🍣' : name.includes('Frango') ? '🍗' : name.includes('Camarão') ? '🍤' : '🥢'}
+      {imageSrc ? (
+        <img src={imageSrc} alt={name} className="absolute inset-0 w-full h-full object-contain p-4 opacity-80 group-hover:opacity-90 transition-opacity" />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-300">
+            {name.includes('Salmão') ? '🍣' : name.includes('Frango') ? '🍗' : name.includes('Camarão') ? '🍤' : '🥢'}
+          </div>
         </div>
-      </div>
+      )}
       {isSelected && (
         <div className="absolute top-3 right-3 bg-red-500 text-white p-2 rounded-full shadow-lg">
           <div className="text-sm font-bold">✓</div>
@@ -281,6 +327,7 @@ export const Menu: React.FC = () => {
                       const itemPrice = typeof item === 'string' ? 0 : item.price;
                       const showQuantity = sectionIndex <= 1; // Show quantity for Base and Protein sections
                       const quantity = getItemQuantity(itemName, section.title);
+                      const imageSrc = getImageSrc(itemName);
                       
                       return (
                         <div key={itemIndex} data-item-name={itemName}>
@@ -298,6 +345,7 @@ export const Menu: React.FC = () => {
                             quantity={quantity}
                             onIncrease={() => handleIncreaseQuantity(itemName, section.title, itemPrice)}
                             onDecrease={() => handleDecreaseQuantity(itemName, section.title)}
+                            imageSrc={imageSrc}
                           />
                         </div>
                       );
@@ -321,6 +369,7 @@ export const Menu: React.FC = () => {
                       price={15.90}
                       onSelect={() => handleSelectItem(item.name, 'Temaki', 15.90)}
                       isSelected={isItemSelected(item.name)}
+                      imageSrc={getImageSrc(item.name)}
                     />
                   </div>
                 ))}
