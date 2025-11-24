@@ -37,10 +37,10 @@ const IMAGE_FILES: Record<string, string> = {
   'Temaki Bacon': 'Temaki Bancon.png'
 };
 
-const getImageSrc = (name: string): string | undefined => {
+const getImageFile = (name: string): string | undefined => {
   const file = IMAGE_FILES[name];
   if (!file) return undefined;
-  return `${import.meta.env.BASE_URL}${encodeURIComponent(file)}`;
+  return file;
 };
 
 // Componente de Item do Menu com design moderno
@@ -55,8 +55,8 @@ const MenuItem: React.FC<{
   quantity?: number;
   onIncrease?: () => void;
   onDecrease?: () => void;
-  imageSrc?: string;
-}> = ({ name, price = 0, ingredients, onSelect, isSelected, disabled, showQuantity = false, quantity = 1, onIncrease, onDecrease, imageSrc }) => (
+  imageFileName?: string;
+}> = ({ name, price = 0, ingredients, onSelect, isSelected, disabled, showQuantity = false, quantity = 1, onIncrease, onDecrease, imageFileName }) => (
   <div 
     onClick={onSelect}
     className={`group relative bg-neutral-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 ${
@@ -68,8 +68,21 @@ const MenuItem: React.FC<{
     {/* Imagem de fundo com overlay */}
     <div className="relative h-32 bg-linear-to-br from-neutral-800 to-neutral-900 overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
-      {imageSrc ? (
-        <img src={imageSrc} alt={name} className="absolute inset-0 w-full h-full object-contain p-4 opacity-80 group-hover:opacity-90 transition-opacity" />
+      {imageFileName ? (
+        <img
+          src={`${import.meta.env.BASE_URL}${encodeURIComponent(imageFileName)}`}
+          alt={name}
+          className="absolute inset-0 w-full h-full object-contain p-4 opacity-80 group-hover:opacity-90 transition-opacity"
+          onError={(e) => {
+            if (imageFileName) {
+              if (import.meta.env.DEV) {
+                (e.currentTarget as HTMLImageElement).src = `/${encodeURIComponent(imageFileName)}`;
+              } else {
+                (e.currentTarget as HTMLImageElement).style.display = 'none';
+              }
+            }
+          }}
+        />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-300">
@@ -327,7 +340,7 @@ export const Menu: React.FC = () => {
                       const itemPrice = typeof item === 'string' ? 0 : item.price;
                       const showQuantity = sectionIndex <= 1; // Show quantity for Base and Protein sections
                       const quantity = getItemQuantity(itemName, section.title);
-                      const imageSrc = getImageSrc(itemName);
+                      const imageFileName = getImageFile(itemName);
                       
                       return (
                         <div key={itemIndex} data-item-name={itemName}>
@@ -345,7 +358,7 @@ export const Menu: React.FC = () => {
                             quantity={quantity}
                             onIncrease={() => handleIncreaseQuantity(itemName, section.title, itemPrice)}
                             onDecrease={() => handleDecreaseQuantity(itemName, section.title)}
-                            imageSrc={imageSrc}
+                            imageFileName={imageFileName}
                           />
                         </div>
                       );
@@ -369,7 +382,7 @@ export const Menu: React.FC = () => {
                       price={15.90}
                       onSelect={() => handleSelectItem(item.name, 'Temaki', 15.90)}
                       isSelected={isItemSelected(item.name)}
-                      imageSrc={getImageSrc(item.name)}
+                      imageFileName={getImageFile(item.name)}
                     />
                   </div>
                 ))}
