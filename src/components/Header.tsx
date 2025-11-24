@@ -2,10 +2,10 @@ import React from 'react';
 import { useOrderStore } from '../store/orderStore';
 
 interface HeaderProps {
-  onNewOrder: () => void;
+  onNewOrder?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onNewOrder }) => {
+export const Header: React.FC<HeaderProps> = () => {
   const { token, customerName } = useOrderStore();
 
   return (
@@ -68,13 +68,6 @@ export const Header: React.FC<HeaderProps> = ({ onNewOrder }) => {
               </div>
             )}
             
-            <button
-              onClick={onNewOrder}
-              className="bg-white text-red-700 px-8 py-4 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center space-x-3 border-2 border-white/50 hover:border-white"
-            >
-              <div className="text-2xl">🔄</div>
-              <span>Novo Pedido</span>
-            </button>
           </div>
         </div>
       </div>

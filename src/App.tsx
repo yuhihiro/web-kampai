@@ -8,14 +8,9 @@ function App() {
   const { clearOrder } = useOrderStore();
   const [showWelcome, setShowWelcome] = useState(true);
 
-  const handleNewOrder = () => {
-    clearOrder();
-    setShowWelcome(false);
-  };
-
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header onNewOrder={handleNewOrder} />
+      <Header />
       
       {showWelcome ? (
         <div className="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-950 to-black flex items-center justify-center px-4 animate-fadeIn">
@@ -47,7 +42,7 @@ function App() {
             
             {/* Botão Principal */}
             <button
-              onClick={() => setShowWelcome(false)}
+              onClick={() => { clearOrder(); setShowWelcome(false); }}
               className="group relative bg-gradient-to-r from-red-500 to-red-600 text-white px-12 py-6 rounded-3xl font-bold text-2xl shadow-2xl hover:shadow-red-500/25 hover:scale-105 transition-all duration-300 flex items-center space-x-4 mx-auto"
             >
               <div className="text-3xl group-hover:animate-pulse">🚀</div>
