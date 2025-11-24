@@ -70,17 +70,17 @@ const MenuItem: React.FC<{
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
       {imageFileName ? (
         <img
-          src={`${import.meta.env.BASE_URL}${encodeURIComponent(imageFileName)}`}
+          src={`${window.location.origin}${import.meta.env.BASE_URL}${encodeURIComponent(imageFileName)}`}
           alt={name}
           data-attempt="0"
           className="absolute inset-0 w-full h-full object-contain p-4 opacity-80 group-hover:opacity-90 transition-opacity"
           onError={(e) => {
             if (!imageFileName) return;
             const el = e.currentTarget as HTMLImageElement;
-            const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-            const path = window.location.pathname.replace(/\/$/, '');
+            const base = `${window.location.origin}${import.meta.env.BASE_URL}`.replace(/\/$/, '');
+            const path = `${window.location.origin}${window.location.pathname}`.replace(/\/$/, '');
             const f = encodeURIComponent(imageFileName);
-            const candidates = [`${base}/${f}`, `${path}/${f}`, `/${f}`];
+            const candidates = [`${base}/${f}`, `${path}/${f}`, `${window.location.origin}/${f}`];
             const i = Number(el.dataset.attempt ?? '0') + 1;
             if (i < candidates.length) {
               el.dataset.attempt = String(i);
