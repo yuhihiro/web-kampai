@@ -184,6 +184,14 @@ export const OrderSummary: React.FC = () => {
               <p className="text-green-700 text-lg font-medium mb-4">
                 Token de atendimento gerado no cabeçalho
               </p>
+              {paymentMethod !== 'pix' && (
+                <div className="bg-yellow-50 border-2 border-yellow-300 rounded-xl p-4 mb-4 inline-block">
+                  <p className="text-yellow-800 font-semibold text-sm mb-1">📱 Ação necessária</p>
+                  <p className="text-yellow-900 font-bold">
+                    Encaminhe o cliente à maquininha ao lado para realizar o pagamento
+                  </p>
+                </div>
+              )}
               {paymentMethod && (
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 inline-block mb-4">
                   <p className="text-green-600 text-sm font-semibold mb-1">
