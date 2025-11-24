@@ -24,8 +24,8 @@ const MenuItem: React.FC<{
     } ${disabled ? 'opacity-60 pointer-events-none' : 'cursor-pointer'}`}
   >
     {/* Imagem de fundo com overlay */}
-    <div className="relative h-32 bg-gradient-to-br from-neutral-800 to-neutral-900 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+    <div className="relative h-32 bg-linear-to-br from-neutral-800 to-neutral-900 overflow-hidden">
+      <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-300">
           {name.includes('Salmão') ? '🍣' : name.includes('Frango') ? '🍗' : name.includes('Camarão') ? '🍤' : '🥢'}
@@ -45,7 +45,7 @@ const MenuItem: React.FC<{
           {name}
         </h4>
         {price > 0 && (
-          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl font-bold text-lg shadow-lg">
+          <div className="bg-linear-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl font-bold text-base sm:text-lg shadow-lg">
             R$ {price.toFixed(2)}
           </div>
         )}
@@ -69,7 +69,7 @@ const MenuItem: React.FC<{
             >
               −
             </button>
-            <span className="text-white font-bold text-lg min-w-[2rem] text-center">{quantity}</span>
+            <span className="text-white font-bold text-lg min-w-8 text-center">{quantity}</span>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -90,7 +90,7 @@ const MenuItem: React.FC<{
     </div>
     
     {/* Efeito de brilho no hover */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+    <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
   </div>
 );
 
@@ -107,12 +107,12 @@ const MenuSection: React.FC<{
       <h3 className="text-2xl font-bold text-white">
         {title}
       </h3>
-      <div className="flex-1 h-px bg-gradient-to-r from-red-200 to-transparent ml-6"></div>
+      <div className="flex-1 h-px bg-linear-to-r from-red-200 to-transparent ml-6"></div>
       {subtitleRight && (
         <div className="ml-4 text-sm text-white font-semibold">{subtitleRight}</div>
       )}
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
       {children}
     </div>
   </div>
@@ -224,14 +224,14 @@ export const Menu: React.FC = () => {
   };
 
   return (
-    <div className="bg-neutral-900 rounded-3xl shadow-2xl p-8 animate-fadeIn border border-neutral-800 overflow-hidden text-white">
+    <div className="bg-neutral-900 rounded-3xl shadow-2xl p-4 sm:p-8 animate-fadeIn border border-neutral-800 overflow-hidden text-white">
       {/* Sistema de Abas Moderno */}
       <div className="flex mb-10 bg-gray-50 rounded-2xl p-2 shadow-inner">
         <button
           onClick={() => setActiveTab('poke')}
-          className={`relative flex-1 py-5 px-8 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-3 ${
+          className={`relative flex-1 py-4 sm:py-5 px-6 sm:px-8 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center space-x-3 ${
             activeTab === 'poke'
-              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-xl transform scale-105'
+              ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-xl transform scale-105'
               : 'text-gray-600 hover:text-red-600 hover:bg-white/50'
           }`}
         >
@@ -243,9 +243,9 @@ export const Menu: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('temaki')}
-          className={`relative flex-1 py-5 px-8 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-3 ${
+          className={`relative flex-1 py-4 sm:py-5 px-6 sm:px-8 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center space-x-3 ${
             activeTab === 'temaki'
-              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-xl transform scale-105'
+              ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-xl transform scale-105'
               : 'text-gray-600 hover:text-red-600 hover:bg-white/50'
           }`}
         >

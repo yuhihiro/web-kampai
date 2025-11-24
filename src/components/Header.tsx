@@ -9,14 +9,14 @@ export const Header: React.FC<HeaderProps> = () => {
   const { token, customerName } = useOrderStore();
 
   return (
-    <header className="bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white shadow-2xl relative overflow-hidden">
+    <header className="bg-linear-to-r from-red-600 via-red-700 to-red-800 text-white shadow-2xl relative overflow-hidden">
       {/* Elementos decorativos de fundo */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-red-500/20 to-transparent"></div>
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
       
-      <div className="container mx-auto px-6 py-8 relative z-10">
-        <div className="flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 relative z-10">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
           {/* Logo e Título */}
           <div className="flex items-center space-x-6">
             <div className="bg-white/20 backdrop-blur-sm p-2 rounded-2xl shadow-lg">

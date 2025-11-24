@@ -37,15 +37,15 @@ export const OrderSummary: React.FC = () => {
   };
 
   return (
-    <div className="bg-neutral-900 rounded-3xl shadow-2xl p-8 border border-neutral-800 relative overflow-hidden text-white">
+    <div className="bg-neutral-900 rounded-3xl shadow-2xl p-4 sm:p-8 border border-neutral-800 relative overflow-hidden text-white">
       {/* Elementos decorativos de fundo */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-50 to-orange-50 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green-50 to-blue-50 rounded-full translate-y-12 -translate-x-12 opacity-50"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-red-50 to-orange-50 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-linear-to-tr from-green-50 to-blue-50 rounded-full translate-y-12 -translate-x-12 opacity-50"></div>
       
       <div className="relative z-10">
         {/* Header do Resumo */}
-        <div className="flex items-center mb-8">
-          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-3 rounded-2xl shadow-lg mr-4">
+        <div className="flex items-center mb-8 gap-4 sm:gap-0 sm:flex-row flex-col sm:items-center">
+          <div className="bg-linear-to-r from-red-500 to-red-600 text-white p-3 rounded-2xl shadow-lg sm:mr-4">
             <div className="text-3xl">📋</div>
           </div>
           <div>
@@ -58,7 +58,7 @@ export const OrderSummary: React.FC = () => {
         
         {/* Campo do Cliente */}
         <div className="mb-8">
-          <label className="block text-lg font-semibold text-gray-700 mb-4 flex items-center">
+          <label className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
             <div className="text-xl mr-2">👤</div>
             Nome do Cliente
           </label>
@@ -77,7 +77,7 @@ export const OrderSummary: React.FC = () => {
         </div>
 
         {/* Lista de Itens */}
-        <div className="space-y-4 mb-8 max-h-96 overflow-y-auto custom-scrollbar">
+        <div className="space-y-4 mb-8 max-h-[60vh] sm:max-h-96 overflow-y-auto custom-scrollbar">
           {items.length === 0 ? (
             <div className="text-center py-12">
               <div className="relative inline-block mb-6">
@@ -92,7 +92,7 @@ export const OrderSummary: React.FC = () => {
           ) : (
             <div className="space-y-3">
               {items.map((item) => (
-                <div key={item.id} className="group bg-gradient-to-r from-neutral-900 to-neutral-800 rounded-2xl border border-neutral-700 hover:border-red-400 hover:shadow-lg transition-all duration-300 p-5">
+                <div key={item.id} className="group bg-linear-to-r from-neutral-900 to-neutral-800 rounded-2xl border border-neutral-700 hover:border-red-400 hover:shadow-lg transition-all duration-300 p-5">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="font-bold text-white text-lg mb-1 group-hover:text-red-400 transition-colors">
@@ -104,7 +104,7 @@ export const OrderSummary: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg">
+                      <div className="bg-linear-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg">
                         R$ {(item.price * item.quantity).toFixed(2)}
                       </div>
                       <button
@@ -124,7 +124,7 @@ export const OrderSummary: React.FC = () => {
 
         {/* Payment Method */}
         {paymentMethod && (
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6 border-2 border-blue-200">
+          <div className="bg-linear-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6 border-2 border-blue-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="text-2xl mr-3">
@@ -148,13 +148,13 @@ export const OrderSummary: React.FC = () => {
         )}
 
         {/* Total e Botão de Finalização */}
-        <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 rounded-2xl p-6 border-2 border-neutral-700">
+        <div className="bg-linear-to-r from-neutral-900 to-neutral-800 rounded-2xl p-6 border-2 border-neutral-700">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
               <div className="text-3xl mr-3">💰</div>
               <span className="text-2xl font-bold text-white">Total do Pedido</span>
             </div>
-            <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-2xl font-bold text-3xl shadow-xl">
+            <div className="bg-linear-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-2xl font-bold text-2xl sm:text-3xl shadow-xl">
               R$ {total.toFixed(2)}
             </div>
           </div>
@@ -162,10 +162,10 @@ export const OrderSummary: React.FC = () => {
           <button
             onClick={handleFinalizeOrder}
             disabled={items.length === 0 || !customerName.trim()}
-            className={`w-full py-5 px-8 rounded-2xl font-bold text-xl transition-all duration-300 flex items-center justify-center space-x-3 ${
+            className={`w-full py-5 px-6 sm:px-8 rounded-2xl font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center space-x-3 ${
               items.length === 0 || !customerName.trim()
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 hover:scale-105 shadow-2xl hover:shadow-red-200'
+                : 'bg-linear-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 hover:scale-105 shadow-2xl hover:shadow-red-200'
             }`}
           >
             <div className="text-2xl">🎯</div>
@@ -175,7 +175,7 @@ export const OrderSummary: React.FC = () => {
 
         {/* Mensagem de Sucesso */}
         {showToken && (
-          <div className="mt-8 p-6 bg-gradient-to-r from-green-50 via-green-100 to-emerald-50 border-2 border-green-300 rounded-2xl animate-fadeIn shadow-lg">
+          <div className="mt-8 p-6 bg-linear-to-r from-green-50 via-green-100 to-emerald-50 border-2 border-green-300 rounded-2xl animate-fadeIn shadow-lg">
             <div className="text-center">
               <div className="text-6xl mb-4 animate-bounce">🎉</div>
               <p className="text-green-800 font-bold text-2xl mb-2">

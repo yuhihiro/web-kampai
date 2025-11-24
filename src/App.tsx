@@ -13,11 +13,11 @@ function App() {
       <Header />
       
       {showWelcome ? (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-950 to-black flex items-center justify-center px-4 animate-fadeIn">
+        <div className="min-h-screen bg-linear-to-br from-neutral-900 via-neutral-950 to-black flex items-center justify-center px-4 sm:px-6 animate-fadeIn">
           <div className="text-center max-w-4xl mx-auto">
             {/* Logo Animada */}
             <div className="relative inline-block mb-8">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-red-600 to-red-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
               <div className="relative bg-white rounded-full p-2 shadow-2xl border-4 border-white">
                 {(() => {
                   const file = 'logo.jpeg';
@@ -34,16 +34,13 @@ function App() {
             </div>
             
             {/* Título Principal */}
-            <h1 className="text-7xl font-black text-white mb-6 tracking-tight">
-              Kampai Box
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-white mb-6 tracking-tight">
+              Kanpai Box
             </h1>
-            
-            
-            
             {/* Botão Principal */}
             <button
               onClick={() => { clearOrder(); setShowWelcome(false); }}
-              className="group relative bg-gradient-to-r from-red-500 to-red-600 text-white px-12 py-6 rounded-3xl font-bold text-2xl shadow-2xl hover:shadow-red-500/25 hover:scale-105 transition-all duration-300 flex items-center space-x-4 mx-auto"
+              className="group relative bg-linear-to-r from-red-500 to-red-600 text-white px-8 md:px-12 py-5 md:py-6 rounded-3xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-red-500/25 hover:scale-105 transition-all duration-300 flex items-center space-x-4 mx-auto"
             >
               <div className="text-3xl group-hover:animate-pulse">🚀</div>
               <span>Iniciar Novo Pedido</span>
@@ -54,8 +51,8 @@ function App() {
           </div>
         </div>
       ) : (
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             <div className="lg:col-span-2">
               <Menu />
             </div>

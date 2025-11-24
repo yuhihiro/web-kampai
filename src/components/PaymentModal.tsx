@@ -51,14 +51,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onC
         {/* Header */}
         <div className="text-center mb-8">
           <div className="text-5xl mb-4 animate-bounce">💳</div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-red-600 bg-clip-text text-transparent mb-2">
+          <h2 className="text-3xl font-bold bg-linear-to-r from-gray-900 to-red-600 bg-clip-text text-transparent mb-2">
             Forma de Pagamento
           </h2>
           <p className="text-gray-600">Escolha como deseja pagar</p>
         </div>
 
         {/* Total */}
-        <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-4 mb-6 text-center">
+        <div className="bg-linear-to-r from-red-50 to-orange-50 rounded-2xl p-4 mb-6 text-center">
           <p className="text-gray-600 text-sm mb-1">Total do pedido</p>
           <p className="text-3xl font-bold text-red-600">R$ {total.toFixed(2)}</p>
         </div>
@@ -106,7 +106,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onC
             disabled={!selectedPayment}
             className={`flex-1 py-3 px-6 rounded-2xl font-bold text-white transition-all duration-200 ${
               selectedPayment
-                ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:scale-105 shadow-lg'
+                ? 'bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:scale-105 shadow-lg'
                 : 'bg-gray-300 cursor-not-allowed'
             }`}
           >
