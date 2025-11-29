@@ -36,8 +36,8 @@ Error generating stack: `+a.message+`
         .main { display: flex; justify-content: space-between; font-weight: bold; }
         .name { max-width: 58mm; word-break: break-word; }
         .qty { min-width: 12mm; text-align: right; }
-        .meta { font-size: 11px; color: #333; }
-        .desc { font-size: 11px; color: #555; }
+        .meta { font-size: 13px; color: #222; line-height: 1.35; }
+        .desc { font-size: 13px; color: #444; line-height: 1.35; }
         .price { font-size: 12px; }
         .total { font-size: 16px; font-weight: bold; display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed #000; }
         .token { font-size: 18px; font-weight: 900; }
